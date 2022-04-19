@@ -1,18 +1,16 @@
-const authorModel= require("../models/authorModel")
+const batchModel= require("../models/batchModel")
 
-const createAuthor= async function (req, res) {
-    let author = req.body
-    let authorCreated = await authorModel.create(author)
-    res.send({data: authorCreated})
+
+
+
+const createBatch= async function (req, res) {
+    let batch = req.body
+    let batchCreated = await batchModel.create(batch)
+    res.send({data: batchCreated})
 }
 
-const getAuthorsData= async function (req, res) {
-    let authors = await authorModel.find()
-    res.send({data: authors})
-}
+module.exports.createBatch= createBatch
 
-module.exports.createAuthor= createAuthor
-module.exports.getAuthorsData= getAuthorsData
 
 
 

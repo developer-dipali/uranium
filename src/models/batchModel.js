@@ -1,30 +1,20 @@
 
 const mongoose = require('mongoose');
 
-const ObjectId = mongoose.Schema.Types.ObjectId
-
-const bookSchema = new mongoose.Schema( {
-    bookName: String,
-    authorId: {
-        type: ObjectId,
-        ref: "newAuthor"
-    },
-    price: Number,
-    ratings: Number,
-    publisherId:{
-        type:ObjectId,
-        ref:"newPublisher"
-    },
-    isHardCover:{
-        type:Boolean,
-        default:false
-    }
 
 
-}, { timestamps: true });
+const batchSchema = new mongoose.Schema( {
+    name: String,
+    size: Number,
+    program :{
+       type:String,
+       enum: ["Backend", "Frontend"]
+   }
+
+    }, { timestamps: true });
 
 
-module.exports = mongoose.model('newBook', bookSchema)
+module.exports = mongoose.model('batch', batchSchema)
 
 
 

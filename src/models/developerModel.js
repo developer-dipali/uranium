@@ -1,13 +1,23 @@
 const mongoose = require('mongoose');
+const ObjectId = mongoose.Schema.Types.ObjectId
 
-const publisherSchema = new mongoose.Schema( {
-    
-    publisherName:{type: String,required:true},
-    headQuarter:String
+const developerSchema = new mongoose.Schema({
+    name: String,
+    gender: {
+        type: String,
+        enum: ["male", "female", "other"]
+    },
+    percentage: Number,
+    batchId: {
+        type: ObjectId,
+        ref: "batch"
+    }
+
+
 
 }, { timestamps: true });
 
-module.exports = mongoose.model('newPublisher', publisherSchema);
+module.exports = mongoose.model(' developer',  developerSchema);
 
 
 //=======================================================================================//
