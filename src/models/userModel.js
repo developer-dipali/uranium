@@ -10,6 +10,9 @@ const userSchema = new mongoose.Schema( {
     },
     emailId: String,
     password: String,
+    isDeleted:{
+        type:Boolean,
+        default:false},
     gender: {
         type: String,
         enum: ["male", "female", "other"]

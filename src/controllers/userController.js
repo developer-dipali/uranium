@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
-
+const mongodb=require("mongodb");
+//======>
 const createUser = async function (abcd, xyz) {
   //You can name the req, res objects anything.
   //but the first parameter is always the request 
@@ -10,7 +11,7 @@ const createUser = async function (abcd, xyz) {
   console.log(abcd.newAtribute);
   xyz.send({ msg: savedData });
 };
-
+//=======>>>
 const loginUser = async function (req, res) {
   let userName = req.body.emailId;
   let password = req.body.password;
@@ -39,7 +40,7 @@ const loginUser = async function (req, res) {
   res.setHeader("x-auth-token", token);
   res.send({ status: true, data: token });
 };
-
+//=====>>>
 const getUserData = async function (req, res) {
   let token = req.headers["x-Auth-token"];
   if (!token) token = req.headers["x-auth-token"];
@@ -65,7 +66,7 @@ const getUserData = async function (req, res) {
 
   res.send({ status: true, data: userDetails });
 };
-
+//========>>>
 const updateUser = async function (req, res) {
 // Do the same steps here:
 // Check if the token is present
@@ -83,8 +84,26 @@ const updateUser = async function (req, res) {
   let updatedUser = await userModel.findOneAndUpdate({ _id: userId }, userData);
   res.send({ status: updatedUser, data: updatedUser });
 };
+//======>>>
+
+const deletUser = async function (req, res) {
+  
+  
+    let userId = req.params.userId;
+    let user = await userModel.findById(userId);
+    //Return an error if no user with the given id exists in the db
+    if (!user) {
+      return res.send("No such user exists");
+    }
+let deletedUser=await userModel.findOneAndUpdate({_id:userId},{isDeleted:true},{new:true});
+res.send({status:deletedUser});
+
+    // let deletedUser = await userModel.deleteOne({ _id:new mongodb.userId});
+    // res.send({ status: deletedUser, data: deletedUser });
+  };
 
 module.exports.createUser = createUser;
 module.exports.getUserData = getUserData;
 module.exports.updateUser = updateUser;
 module.exports.loginUser = loginUser;
+module.exports.deletUser = deletUser;
